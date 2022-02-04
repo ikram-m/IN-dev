@@ -61,30 +61,33 @@ namespace E5irProjet.Repositorys
                   }
             }
 
-        public StreamReader DownloadFileFTP()
+        public Stream DownloadFileFTP()
         {
-           
-            //Get the object used to communicate with the server.
-            FtpWebRequest request =
-    (FtpWebRequest)WebRequest.Create("ftp://ftp.vastserve.com/htdocs/ISD_TRANS_MW_ERC_PM_V17.csv");
-            request.Credentials = new NetworkCredential("vasts_30905831", "RIHABBEJI");
+
+            // Get the object used to communicate with the server.
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ftp.vastserve.com/htdocs/SOEM1_TN_RADIO_LINK_POWER_20200312_001500.txt");
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
+            // This example assumes the FTP site uses anonymous logon.
+            request.Credentials = new NetworkCredential("vasts_30905831", "RIHABBEJI");
 
-            using (Stream stream = request.GetResponse().GetResponseStream())
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
-            using (StreamReader reader = new StreamReader(stream, Encoding.Default))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    // process the line
-                    Console.WriteLine(line);
-                }
-                return reader;
+            Stream responseStream = response.GetResponseStream();
+            return responseStream;
 
-            }
+            /* StreamReader reader = new StreamReader(responseStream);
+             Console.WriteLine(reader.ReadToEnd());
 
+
+
+
+
+
+             Console.WriteLine($"Download Complete, status {response.StatusDescription}");
+
+             reader.Close();
+             response.Close();*/
         }
     }
     } 

@@ -33,14 +33,7 @@ namespace E5irProjet.Repositorys
                 string path_txt = @"D:\testCSV\SOEM1_TN_RADIO_LINK_POWER_20200312_001500.txt";
                 //*******
 
-                FtpWebRequest request2 =
-                (FtpWebRequest)WebRequest.Create("ftp://ftp.vastserve.com/htdocs/SOEM1_TN_RADIO_LINK_POWER_20200312_001500.txt");
-                request2.Credentials = new NetworkCredential("vasts_30905831", "RIHABBEJI");
-                request2.Method = WebRequestMethods.Ftp.DownloadFile;
-                using (Stream stream2 = request.GetResponse().GetResponseStream())
-
-
-                    remove_row_by_header(getDataByFileName(records), path_txt);
+                    remove_row_by_header(getDataByFileName(records));
 
             }
 
@@ -61,13 +54,14 @@ namespace E5irProjet.Repositorys
 
         }
 
-        private void remove_row_by_header(IEnumerable<Radio> records, string path)
+        private void remove_row_by_header(IEnumerable<Radio> records)
         {
 
 
             string name_file = "";
             string target = "";
             List<string> lines = new List<string>();
+            FTP_conn ftp = new FTP_conn();
             foreach (Radio rad in records)
             {
                 if (rad.Name_file == "RADIO_LINK_POWER")
@@ -75,7 +69,7 @@ namespace E5irProjet.Repositorys
                     if (rad.Status == "DISABLED")
                     {
                         target = rad.Header;//the name of the column to skip
-                        using (StreamReader reader = new StreamReader(System.IO.File.OpenRead(path)))
+                        using (StreamReader reader = new StreamReader(ftp.DownloadFileFTP()))
                         {
                             // string target = "";//the name of the column to skip
 
@@ -129,16 +123,15 @@ namespace E5irProjet.Repositorys
             //
             string filename = String.Format(name_file + DateTime.UtcNow.ToString("yyyyMMdd_HHmmss") + ".csv");
 
-            string loc_file = @"D:\" + filename;
+            string loc_file = @"D:\testCSV\" + filename;
 
-            using (StreamWriter writer = new StreamWriter(@"D:\" + filename, false))
+            using (StreamWriter writer = new StreamWriter(@"D:\testCSV\" + filename, false))
             {
                 foreach (string line in lines)
                     writer.WriteLine(line);
 
             }
 
-            FTP_conn ftp = new FTP_conn();
             ftp.AddFile(loc_file);
 
         }
