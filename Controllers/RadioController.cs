@@ -1,4 +1,6 @@
-﻿using E5irProjet.Repositorys;
+﻿using E5irProjet.Models;
+using E5irProjet.Repositorys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,21 +11,23 @@ namespace E5irProjet.Controllers
 {
      [ApiController]
     [Route("[controller]")]
+   
     public class RadioController : Controller
     {
+       // DataParameters parms = new DataParameters();
+
         public IActionResult Index()
         {
             return View();
         }
-
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get([FromBody] DataParameters summary)
         {
-            var ftp_conn = new FTP_conn();
-           // ftp_conn.DownloadFileFTP();
+            DataParameters parms = new DataParameters();
             var csvParserService = new CsvParserService();
-             csvParserService.ParserWS();
-            return new JsonResult("Added Successfully");
+             csvParserService.ParserWS(summary);
+            return new JsonResult("Added Successfully ** ");
         }
+
     }
 }

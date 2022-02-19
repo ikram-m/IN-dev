@@ -15,28 +15,36 @@ namespace E5irProjet.Repositorys
 {
     public class CsvParserService
     {
-        public void ParserWS()
+        
+        
+
+
+        public void ParserWS(DataParameters parms)
         {
 
-            FtpWebRequest request =
-                (FtpWebRequest)WebRequest.Create("ftp://ftp.vastserve.com/htdocs/ISD_TRANS_MW_ERC_PM_V17.csv");
-            request.Credentials = new NetworkCredential("vasts_30905831", "RIHABBEJI");
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-            using (Stream stream = request.GetResponse().GetResponseStream())
-
-
-            using (var reader = new StreamReader(stream, Encoding.Default))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            try
             {
-                csv.Context.RegisterClassMap<RadioMapp>();
-                var records = csv.GetRecords<Radio>();
-                string path_txt = @"D:\testCSV\SOEM1_TN_RADIO_LINK_POWER_20200312_001500.txt";
-                //*******
+                FtpWebRequest request =
+                    (FtpWebRequest)WebRequest.Create("ftp://"+ parms.HostName +parms.path_CSV_file);
+                request.Credentials = new NetworkCredential(parms.UserName, parms.Password);
+                request.Method = WebRequestMethods.Ftp.DownloadFile;
+                using (Stream stream = request.GetResponse().GetResponseStream())
 
-                    remove_row_by_header(getDataByFileName(records));
 
+                using (var reader = new StreamReader(stream, Encoding.Default))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    csv.Context.RegisterClassMap<RadioMapp>();
+                    var records = csv.GetRecords<Radio>();
+
+                    remove_row_by_header(getDataByFileName(records), parms);
+
+                }
             }
-
+            catch (WebException e)
+            {
+                String status = ((FtpWebResponse)e.Response).StatusDescription;
+            }
         }
 
 
@@ -54,7 +62,7 @@ namespace E5irProjet.Repositorys
 
         }
 
-        private void remove_row_by_header(IEnumerable<Radio> records)
+        private void remove_row_by_header(IEnumerable<Radio> records, DataParameters parms)
         {
 
 
@@ -69,7 +77,7 @@ namespace E5irProjet.Repositorys
                     if (rad.Status == "DISABLED")
                     {
                         target = rad.Header;//the name of the column to skip
-                        using (StreamReader reader = new StreamReader(ftp.DownloadFileFTP()))
+                        using (StreamReader reader = new StreamReader(ftp.DownloadFileFTP(parms)))
                         {
                             // string target = "";//the name of the column to skip
 
@@ -132,7 +140,7 @@ namespace E5irProjet.Repositorys
 
             }
 
-            ftp.AddFile(loc_file);
+            ftp.AddFile(loc_file,parms);
 
         }
     }

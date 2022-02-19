@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E5irProjet.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace E5irProjet.Repositorys
     public class FTP_conn
     {
 
-        public string AddFile(string loc_name)
+        public string AddFile(string loc_name, DataParameters parms)
         {
 
           
@@ -22,9 +23,10 @@ namespace E5irProjet.Repositorys
                       SessionOptions sessionOptions = new SessionOptions
                       {
                           Protocol = Protocol.Ftp,
-                          HostName = "ftp.vastserve.com",
-                          UserName = "vasts_30905831",
-                          Password = "RIHABBEJI"
+                          HostName = parms.HostName,
+                          UserName = parms.UserName,
+                          Password = parms.Password,
+
                       };
 
 
@@ -39,7 +41,7 @@ namespace E5irProjet.Repositorys
 
                           TransferOperationResult transferResult;
                           transferResult =
-                                          session.PutFiles(loc_name, "/htdocs/", false, transferOptions);
+                                          session.PutFiles(loc_name, "/ik/", false, transferOptions);
 
                     File.Delete(loc_name);
                     // Throw on any error
@@ -61,15 +63,15 @@ namespace E5irProjet.Repositorys
                   }
             }
 
-        public Stream DownloadFileFTP()
+        public Stream DownloadFileFTP(DataParameters parms)
         {
 
             // Get the object used to communicate with the server.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ftp.vastserve.com/htdocs/SOEM1_TN_RADIO_LINK_POWER_20200312_001500.txt");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://"+parms.HostName+parms.path_txt_file);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
 
             // This example assumes the FTP site uses anonymous logon.
-            request.Credentials = new NetworkCredential("vasts_30905831", "RIHABBEJI");
+            request.Credentials = new NetworkCredential(parms.UserName, parms.Password);
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 

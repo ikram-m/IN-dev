@@ -30,3 +30,13 @@ D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\bin\Debug\netcoreapp3.1\R
 D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\bin\Debug\netcoreapp3.1\SshNet.Security.Cryptography.dll
 D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\bin\Debug\netcoreapp3.1\WinSCPnet.dll
 D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\bin\Debug\netcoreapp3.1\WinScpHelper.dll
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\bin\Debug\netcoreapp3.1\E5irProjet.Views.dll
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\bin\Debug\netcoreapp3.1\E5irProjet.Views.pdb
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.RazorAssemblyInfo.cache
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.RazorAssemblyInfo.cs
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.TagHelpers.input.cache
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.TagHelpers.output.cache
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.RazorCoreGenerate.cache
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\Razor\Views\Radio\Index.cshtml.g.cs
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.RazorTargetAssemblyInfo.cs
+D:\CSVHelperExample-master\CSVHelperProject\E5irProjet\obj\Debug\netcoreapp3.1\E5irProjet.Views.pdb
